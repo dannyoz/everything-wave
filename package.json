@@ -1,0 +1,28 @@
+{
+  "name": "everything-wave",
+  "version": "1.0.0",
+  "description": "Twitter bot for everything wave",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dannyoz/everything-wave.git"
+  },
+  "keywords": [
+    "twitter"
+  ],
+  "author": "dannyoz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dannyoz/everything-wave/issues"
+  },
+  "homepage": "https://github.com/dannyoz/everything-wave#readme",
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "express": "^4.15.3",
+    "gulp": "^3.9.1",
+    "twitter": "^1.7.1"
+  }
+}
