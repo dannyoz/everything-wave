@@ -60,5 +60,5 @@ gulp.task('watch', function () {
     gulp.watch('app/**/*.jsx', ['frontEnd']);
 });
 
-gulp.task('frontEnd', ['browserify', 'sass', 'img', 'media', 'views']);
-gulp.task('default',  ['browserify', 'sass', 'img', 'media', 'views', 'watch', 'server']);
+gulp.task('frontEnd', ['browserify', 'sass', 'img', 'views']);
+gulp.task('default',  ['browserify', 'sass', 'img', 'views', 'watch', 'server']);
