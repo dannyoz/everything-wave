@@ -2,6 +2,9 @@ module.exports = {
   routes : [{
     "title" : "Home",
     "path" : "/"
+  }, {
+    "title" : "Builder",
+    "path" : "/builder"
   }],
 	staticDirs : [
     'css', 

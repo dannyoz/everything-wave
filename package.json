@@ -36,6 +36,7 @@
     "gulp-strip-debug": "^1.1.0",
     "gulp-uglify": "^3.0.0",
     "spice-sass": "^1.1.1",
+    "superagent": "^3.5.2",
     "twitter": "^1.7.1",
     "vue": "^1.0.26",
     "vueify": "^8.7.0",
