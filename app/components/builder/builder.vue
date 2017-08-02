@@ -51,13 +51,19 @@
                 });
             },
             switchWord() {
-                console.log('jfdskl');
+                
+                var newList = words.filter((word) => {
+                    return word.length <= 12;
+                });
+                var longest = newList.reduce(function (a, b) { return a.length > b.length ? a : b; });
+                console.log(newList.length, longest);
+
                 let index = 0;
                 setInterval(() => {
-                    var string = words[index].replace('�', '');
+                    var string = newList[index].replace('�', '');
                     console.log(string);
                     index ++;
-                }, 100);
+                }, 5);
             }
         }
     }

@@ -1,9 +1,10 @@
 var routes = {};
 var constants = require('../app/shared/constants.js');
 var HTTP = require('superagent');
+var webshot = require('webshot');
+var fs = require('fs');
 
 routes[`${constants.apiVersion}wordlist`] = function(req, res){
-    // var url = "https://od-api.oxforddictionaries.com:443/api/v1/wordlist/en/lexicalCategory=Verb,Noun?limit=50&word_length=>2,<14";
 
     var apiPath = "https://od-api.oxforddictionaries.com:443/api/v1/wordlist/en/";
     var filter = req.body.filter;
@@ -26,6 +27,23 @@ routes[`${constants.apiVersion}wordlist`] = function(req, res){
                 res.status(200).json(json);
             }
         });
+};
+
+routes[`${constants.apiVersion}screengrab`] = function(req, res) {
+    var renderStream = webshot('http://localhost:5000/');
+    var file = fs.createWriteStream('app/img/test.png', {encoding: 'binary'});
+    var headerSent = false;
+    
+    renderStream.on('data', function(data) {
+        file.write(data.toString('binary'), 'binary', function(err) {
+            if(err) {
+                res.status(500).send(err);
+            } else if(!headerSent) {
+                headerSent = true;
+                res.status(200).send({data: 'Success'});
+            }
+        });
+    });
 };
 
 module.exports = routes;
