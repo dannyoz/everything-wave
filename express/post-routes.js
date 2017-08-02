@@ -36,9 +36,9 @@ routes[`${constants.apiVersion}screengrab`] = function(req, res) {
     
     renderStream.on('data', function(data) {
         file.write(data.toString('binary'), 'binary', function(err) {
-            if(err) {
+            if (err) {
                 res.status(500).send(err);
-            } else if(!headerSent) {
+            } else if (!headerSent) {
                 headerSent = true;
                 res.status(200).send({data: 'Success'});
             }
