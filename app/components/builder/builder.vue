@@ -53,17 +53,17 @@
             switchWord() {
                 
                 var newList = words.filter((word) => {
-                    return word.length <= 12;
+                    return word.length > 2 && word.length <= 12;
                 });
                 var longest = newList.reduce(function (a, b) { return a.length > b.length ? a : b; });
                 console.log(newList.length, longest);
 
-                let index = 0;
-                setInterval(() => {
-                    var string = newList[index].replace('�', '');
-                    console.log(string);
-                    index ++;
-                }, 5);
+                // let index = 0;
+                // setInterval(() => {
+                //     var string = newList[index].replace('�', '');
+                //     console.log(string);
+                //     index ++;
+                // }, 5);
             }
         }
     }
