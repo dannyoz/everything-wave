@@ -1,5 +1,3 @@
 @import "../node_modules/spice-sass/src/spice";
-
-body {
-    background: #ddd;
-}
+@import "shared/global-styles";
+@import "components/home/home";

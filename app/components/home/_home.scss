@@ -1,0 +1,15 @@
+.home {
+    .centre {
+
+        h1 {
+            font-family: "blambot-pro", sans-serif;
+            color: white;
+        }
+
+        h2 {
+            color: white;
+        }
+
+        @include centre();
+    }
+}

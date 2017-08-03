@@ -3,6 +3,7 @@ var constants = require('../app/shared/constants.js');
 var HTTP = require('superagent');
 var webshot = require('webshot');
 var fs = require('fs');
+var words = require('../app/shared/words.json');
 
 routes[`${constants.apiVersion}wordlist`] = function(req, res){
 
@@ -30,7 +31,8 @@ routes[`${constants.apiVersion}wordlist`] = function(req, res){
 };
 
 routes[`${constants.apiVersion}screengrab`] = function(req, res) {
-    var renderStream = webshot('http://localhost:5000/');
+    var imgIndex = req.body.imgIndex;
+    var renderStream = webshot(`http://localhost:5000?word=${imgIndex}`);
     var file = fs.createWriteStream('app/img/test.png', {encoding: 'binary'});
     var headerSent = false;
     
@@ -43,6 +45,25 @@ routes[`${constants.apiVersion}screengrab`] = function(req, res) {
                 res.status(200).send({data: 'Success'});
             }
         });
+    });
+};
+
+routes[`${constants.apiVersion}clean-json`] = function(req, res) {
+    var headerSent = false;
+    var newList = words.filter((word) => {
+        return word.length > 2 && word.length <= 12 && word.indexOf('�') < 0;
+    });
+
+    var longest = newList.reduce(function (a, b) { return a.length > b.length ? a : b; });
+    console.log(newList.length, longest);
+
+    fs.writeFile('app/shared/words-clean.json', JSON.stringify(newList), (err) => {
+        if(err) {
+            res.status(500).send(err);
+        } else if(!headerSent) {
+            headerSent = true;
+            res.status(200).send({data: 'Success'});
+        }
     });
 };
 
