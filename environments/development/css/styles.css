@@ -10,4 +10,7 @@ body {
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%); }
   .home .centre h1 {
+    font-family: "blambot-pro", sans-serif;
+    color: white; }
+  .home .centre h2 {
     color: white; }

@@ -31,7 +31,8 @@ routes[`${constants.apiVersion}wordlist`] = function(req, res){
 };
 
 routes[`${constants.apiVersion}screengrab`] = function(req, res) {
-    var renderStream = webshot('http://localhost:5000/');
+    var imgIndex = req.body.imgIndex;
+    var renderStream = webshot(`http://localhost:5000?word=${imgIndex}`);
     var file = fs.createWriteStream('app/img/test.png', {encoding: 'binary'});
     var headerSent = false;
     
