@@ -52,6 +52,7 @@ routes[`${constants.apiVersion}nextword`] = function(req, res) {
     var dest = 'app/shared/current-word.json';
     var newJson = createNext();
     
+
     function createNext() {
         var current = require('../' + dest);
         var nextIndex = current.index + 1;
@@ -72,6 +73,7 @@ routes[`${constants.apiVersion}nextword`] = function(req, res) {
             newJson = createNext();
             res.status(200).send({data: 'file written'});
         }
+
     });
 }
 
