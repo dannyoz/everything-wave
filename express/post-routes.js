@@ -3,7 +3,8 @@ var constants = require('../app/shared/constants.js');
 var HTTP = require('superagent');
 var webshot = require('webshot');
 var fs = require('fs');
-var words = require('../app/shared/words.json');
+var words = require('../app/shared/words-clean.json');
+var screenshot = require('screenshot-stream');
 
 routes[`${constants.apiVersion}wordlist`] = function(req, res){
 
@@ -32,7 +33,15 @@ routes[`${constants.apiVersion}wordlist`] = function(req, res){
 
 routes[`${constants.apiVersion}screengrab`] = function(req, res) {
     var imgIndex = req.body.imgIndex;
-    var renderStream = webshot(`http://localhost:5000?word=${imgIndex}`);
+    var url = `http://localhost:5000/word/${imgIndex}`;
+    // var stream = screenshot(url, '1024x768', {crop: true});
+    
+    // stream.pipe(fs.createWriteStream('app/img/test.png'));
+    // stream.on('end', function() {
+    //     console.log
+    //     res.status(200).send({data: 'Success'});
+    // });
+    var renderStream = webshot(url);
     var file = fs.createWriteStream('app/img/test.png', {encoding: 'binary'});
     var headerSent = false;
     
@@ -47,6 +56,34 @@ routes[`${constants.apiVersion}screengrab`] = function(req, res) {
         });
     });
 };
+
+routes[`${constants.apiVersion}nextword`] = function(req, res) {
+    var headerSent = false;
+    var dest = 'app/shared/current-word.json';
+    var newJson = createNext();
+    
+    function createNext() {
+        var current = require('../' + dest);
+        var nextIndex = current.index + 1;
+        var nextWord = words[nextIndex];
+        return {
+            index: nextIndex,
+            text: nextWord
+        };
+    };
+
+    console.log(newJson);
+
+    fs.writeFile(dest, JSON.stringify(newJson), (err) => {
+        if(err) {
+            res.status(500).send(err);
+        } else if(!headerSent) {
+            headerSent = true;
+            newJson = createNext();
+            res.status(200).send({data: 'file written'});
+        }
+    });
+}
 
 routes[`${constants.apiVersion}clean-json`] = function(req, res) {
     var headerSent = false;
