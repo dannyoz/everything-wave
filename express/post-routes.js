@@ -6,7 +6,7 @@ const fs = require('fs');
 const words = require('../app/shared/words-clean.json');
 const screenshot = require('screenshot-stream');
 const environment = process.env.NODE_ENV || 'development';
-const envPath = '/environments/'+environment+'/';
+const envPath = './environments/'+environment+'/';
 
 routes[`${constants.apiVersion}wordlist`] = function(req, res){
 
@@ -37,27 +37,6 @@ routes[`${constants.apiVersion}screengrab`] = function(req, res) {
     var imgIndex = req.body.imgIndex;
     var url = `http://localhost:5000/word/${imgIndex}`;
     var file = envPath + '/img/test.png';
-    // var stream = screenshot(url, '1024x768', {crop: true});
-    
-    // stream.pipe(fs.createWriteStream('app/img/test.png'));
-    // stream.on('end', function() {
-    //     console.log
-    //     res.status(200).send({data: 'Success'});
-    // });
-    // var renderStream = webshot(url);
-    // var file = fs.createWriteStream('app/img/test.png', {encoding: 'binary'});
-    // var headerSent = false;
-    
-    // renderStream.on('data', function(data) {
-    //     file.write(data.toString('binary'), 'binary', function(err) {
-    //         if(err) {
-    //             res.status(500).send(err);
-    //         } else if(!headerSent) {
-    //             headerSent = true;
-    //             res.status(200).send({data: 'Success'});
-    //         }
-    //     });
-    // });
 
     webshot(url, file, function(err) {
         if(err) {
