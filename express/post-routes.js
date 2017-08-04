@@ -1,10 +1,12 @@
-var routes = {};
-var constants = require('../app/shared/constants.js');
-var HTTP = require('superagent');
-var webshot = require('webshot');
-var fs = require('fs');
-var words = require('../app/shared/words-clean.json');
-var screenshot = require('screenshot-stream');
+const routes = {};
+const constants = require('../app/shared/constants.js');
+const HTTP = require('superagent');
+const webshot = require('webshot');
+const fs = require('fs');
+const words = require('../app/shared/words-clean.json');
+const screenshot = require('screenshot-stream');
+const environment = process.env.NODE_ENV || 'development';
+const envPath = '/environments/'+environment+'/';
 
 routes[`${constants.apiVersion}wordlist`] = function(req, res){
 
@@ -34,6 +36,7 @@ routes[`${constants.apiVersion}wordlist`] = function(req, res){
 routes[`${constants.apiVersion}screengrab`] = function(req, res) {
     var imgIndex = req.body.imgIndex;
     var url = `http://localhost:5000/word/${imgIndex}`;
+    var file = envPath + '/img/test.png';
     // var stream = screenshot(url, '1024x768', {crop: true});
     
     // stream.pipe(fs.createWriteStream('app/img/test.png'));
@@ -41,19 +44,27 @@ routes[`${constants.apiVersion}screengrab`] = function(req, res) {
     //     console.log
     //     res.status(200).send({data: 'Success'});
     // });
-    var renderStream = webshot(url);
-    var file = fs.createWriteStream('app/img/test.png', {encoding: 'binary'});
-    var headerSent = false;
+    // var renderStream = webshot(url);
+    // var file = fs.createWriteStream('app/img/test.png', {encoding: 'binary'});
+    // var headerSent = false;
     
-    renderStream.on('data', function(data) {
-        file.write(data.toString('binary'), 'binary', function(err) {
-            if(err) {
-                res.status(500).send(err);
-            } else if(!headerSent) {
-                headerSent = true;
-                res.status(200).send({data: 'Success'});
-            }
-        });
+    // renderStream.on('data', function(data) {
+    //     file.write(data.toString('binary'), 'binary', function(err) {
+    //         if(err) {
+    //             res.status(500).send(err);
+    //         } else if(!headerSent) {
+    //             headerSent = true;
+    //             res.status(200).send({data: 'Success'});
+    //         }
+    //     });
+    // });
+
+    webshot(url, file, function(err) {
+        if(err) {
+            res.status(500).send(err);
+        } else {
+            res.status(200).send({data: 'Success'});
+        }
     });
 };
 
