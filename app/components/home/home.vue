@@ -8,13 +8,14 @@
 </template>
 
 <script>
-    const wordIndex = (location.search) ? location.search.replace('?word=', '') : 0;
+    //const wordIndex = (location.search) ? location.search.replace('?word=', '') : 0;
 
-    import words from '../../shared/words-clean.json';
+    // import words from '../../shared/words-clean.json';
     export default {
         computed: {
             currentWord() {
-                return words[wordIndex];
+                // return words[wordIndex];
+                return 'Testing';
             }
         }
     }

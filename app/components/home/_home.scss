@@ -2,8 +2,13 @@
     .centre {
 
         h1 {
-            font-family: "blambot-pro", sans-serif;
+            // font-family: "blambot-pro", sans-serif;
+            font-family: 'Permanent Marker', cursive;
             color: white;
+            line-height: 3.5rem;
+            text-shadow: 0 0 10px 5px red;
+            text-transform: uppercase;
+            @include gradientText(#FFEB3B, #FF5722);
         }
 
         h2 {
