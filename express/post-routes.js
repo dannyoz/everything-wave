@@ -189,14 +189,14 @@ routes[`${constants.apiVersion}tweet`] = function(req, res) {
                 
                     Twit.post('statuses/update', params, function (err, data, response) {
                         console.log('Tweet created!');
-                        clean();
+                        clean(word);
                     })
                 }
             });
         });
     };
 
-    function clean() {
+    function clean(word) {
         console.log('Cleaning directory...');
         var file = envPath + '/img/test.png';
         del([file], function (err, paths) {
@@ -204,7 +204,11 @@ routes[`${constants.apiVersion}tweet`] = function(req, res) {
                 res.status(500).send(err);
             } else {
                 console.log('Deleted files/folders:\n', paths.join('\n'));
-                res.status(200).send({data: 'success'});
+                console.log('Tweet successfully posted: '+word+'wave')
+                res.status(200).send({
+                    status: 'success',
+                    word: word+'wave'
+                });
             }
         });
     };
