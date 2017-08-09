@@ -41,6 +41,7 @@
     "mongoose": "^4.11.5",
     "node-delete": "^0.1.2",
     "node-twitter-api": "^1.8.0",
+    "phantomjs": "^2.1.7",
     "screenshot-stream": "^4.2.0",
     "spice-sass": "^1.1.1",
     "superagent": "^3.5.2",
