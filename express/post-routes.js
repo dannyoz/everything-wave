@@ -54,18 +54,18 @@ routes[`${constants.apiVersion}nextword`] = function(req, res) {
     
 
     function createNext() {
-        var current = require('../' + dest);
+        var content = fs.readFileSync(dest, 'utf8');
+        var current = JSON.parse(content);
         var nextIndex = current.index + 1;
         var nextWord = words[nextIndex];
-        return {
+        var newString = JSON.stringify({
             index: nextIndex,
             text: nextWord
-        };
+        });
+        return newString;
     };
 
-    console.log(newJson);
-
-    fs.writeFile(dest, JSON.stringify(newJson), (err) => {
+    fs.writeFile(dest, newJson, (err) => {
         if(err) {
             res.status(500).send(err);
         } else if(!headerSent) {
