@@ -39,6 +39,7 @@
     "gulp-uglify": "^1.5.1",
     "gulp-vueify": "0.0.3",
     "mongoose": "^4.11.5",
+    "node-delete": "^0.1.2",
     "node-twitter-api": "^1.8.0",
     "screenshot-stream": "^4.2.0",
     "spice-sass": "^1.1.1",
