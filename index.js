@@ -43,11 +43,11 @@ for (var route in postRoutes) {
 	js.post(route, postRoutes[route]);
 }
 
-//if (environment === 'development') {
+if (environment === 'development') {
 	js.get('/env', function(req, res) {
 		res.status(200).send(process.env);
 	});
-//}
+}
 
 js.use(err404);
 
