@@ -159,8 +159,11 @@ routes[`${constants.apiVersion}tweet`] = function(req, res) {
         console.log('Generating screen grab...');
         var url = `http://localhost:5000/word/`;
         var file = envPath + '/img/test.png';
+        var options = {
+            phantomPath: 'node_modules/phantomjs/bin/phantomjs'
+        };
 
-        webshot(url, file, function(err) {
+        webshot(url, file, options, function(err) {
             if(err) {
                 res.status(500).send(err);
             } else {
