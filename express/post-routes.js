@@ -7,6 +7,7 @@ const fs = require('fs');
 const del = require('node-delete');
 const words = require('../app/shared/words-clean.json');
 const screenshot = require('screenshot-stream');
+// const screenshot = require('url-to-screenshot');
 const environment = process.env.NODE_ENV || 'development';
 const envPath = './environments/'+environment+'/';
 
@@ -44,17 +45,38 @@ routes[`${constants.apiVersion}wordlist`] = function(req, res){
 };
 
 routes[`${constants.apiVersion}screengrab`] = function(req, res) {
-    var imgIndex = req.body.imgIndex;
-    var url = `http://localhost:5000/word/${imgIndex}`;
+    var url = `http://localhost:5000/word`;
     var file = envPath + '/img/test.png';
+    var options = {
+        phantomPath: 'node_modules/phantomjs/bin/phantomjs'
+    };
 
-    webshot(url, file, function(err) {
+    webshot(url, file, options, function(err) {
         if(err) {
             res.status(500).send(err);
         } else {
             res.status(200).send({data: 'Success'});
         }
     });
+
+
+    // const stream = screenshot(url, '1024x768', {crop: true});
+    // stream.pipe(function() {
+    //     fs.createWriteStream(file);
+    //     res.status(200).send({data: 'Success'});
+    // });
+
+    // screenshot(url)
+    // .width(800)
+    // .height(600)
+    // .capture(function(err, img) {
+    //     if(err) {
+    //         res.status(500).send(err);
+    //     } else {
+    //         fs.writeFileSync(file);
+    //         res.status(200).send({data: 'Success'});
+    //     }
+    // });
 };
 
 routes[`${constants.apiVersion}nextword`] = function(req, res) {
