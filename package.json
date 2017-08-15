@@ -47,7 +47,6 @@
     "superagent": "^3.5.2",
     "swig": "^1.4.2",
     "twit": "^2.2.9",
-    "url-to-screenshot": "^0.6.2",
     "vue": "^1.0.26",
     "vueify": "^8.7.0",
     "vueify-insert-css": "^1.0.0",
