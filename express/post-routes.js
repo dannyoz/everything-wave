@@ -45,9 +45,9 @@ routes[`${constants.apiVersion}wordlist`] = function(req, res){
 };
 
 routes[`${constants.apiVersion}screengrab`] = function(req, res) {
-    var url = `http://localhost:5000/word`;
-    var file = envPath + '/img/test.png';
-    var options = {
+    const url = (environment === 'development') ? 'http://localhost:5000/word' : 'https://everything-wave.herokuapp.com/word' ;
+    const file = envPath + '/img/test.png';
+    const options = {
         phantomPath: 'node_modules/phantomjs/bin/phantomjs'
     };
 
