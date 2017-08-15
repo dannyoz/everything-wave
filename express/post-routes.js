@@ -7,7 +7,6 @@ const fs = require('fs');
 const del = require('node-delete');
 const words = require('../app/shared/words-clean.json');
 const screenshot = require('screenshot-stream');
-// const screenshot = require('url-to-screenshot');
 const environment = process.env.NODE_ENV || 'development';
 const envPath = './environments/'+environment+'/';
 
@@ -59,24 +58,6 @@ routes[`${constants.apiVersion}screengrab`] = function(req, res) {
         }
     });
 
-
-    // const stream = screenshot(url, '1024x768', {crop: true});
-    // stream.pipe(function() {
-    //     fs.createWriteStream(file);
-    //     res.status(200).send({data: 'Success'});
-    // });
-
-    // screenshot(url)
-    // .width(800)
-    // .height(600)
-    // .capture(function(err, img) {
-    //     if(err) {
-    //         res.status(500).send(err);
-    //     } else {
-    //         fs.writeFileSync(file);
-    //         res.status(200).send({data: 'Success'});
-    //     }
-    // });
 };
 
 routes[`${constants.apiVersion}nextword`] = function(req, res) {
@@ -179,9 +160,9 @@ routes[`${constants.apiVersion}tweet`] = function(req, res) {
 
     function screenGrab(word) {
         console.log('Generating screen grab...');
-        var url = `http://localhost:5000/word/`;
-        var file = envPath + '/img/test.png';
-        var options = {
+        const url = (environment === 'development') ? 'http://localhost:5000/word' : 'https://everything-wave.herokuapp.com/word' ;
+        const file = envPath + '/img/test.png';
+        const options = {
             phantomPath: 'node_modules/phantomjs/bin/phantomjs'
         };
 
