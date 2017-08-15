@@ -52,5 +52,5 @@ if (environment === 'development') {
 js.use(err404);
 
 js.listen(js.get('port'), function() {
-  console.log('Everythin wave app is running on port', js.get('port'));
+  console.log('Everything wave app is running on port', js.get('port'));
 });
