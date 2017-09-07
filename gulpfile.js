@@ -43,7 +43,6 @@ gulp.task('browserify', function () {
         .pipe(gulp.dest('./environments/production/js'))
 });
 
-
 gulp.task('sass', function () {
     gulp.src('./app/styles.scss')
         .pipe(sass().on('error', sass.logError))
