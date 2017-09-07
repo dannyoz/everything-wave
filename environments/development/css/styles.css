@@ -15,6 +15,7 @@ body {
     line-height: 3.5rem;
     text-shadow: 0 0 10px 5px red;
     text-transform: uppercase;
+    opacity: 0;
     color: #ffa12f;
     background: -webkit-linear-gradient(#FFEB3B, #FF5722);
     -webkit-background-clip: text;
