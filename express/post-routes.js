@@ -18,6 +18,14 @@ const Twit = new twit({
     timeout_ms:           60*1000,  
 });
 
+const webshotOptions = {
+    screenSize: {
+        width: 800,
+        height: 450
+    },
+    phantomPath: 'node_modules/phantomjs/bin/phantomjs'
+};
+
 routes[`${constants.apiVersion}wordlist`] = function(req, res){
 
     var apiPath = "https://od-api.oxforddictionaries.com:443/api/v1/wordlist/en/";
@@ -46,11 +54,8 @@ routes[`${constants.apiVersion}wordlist`] = function(req, res){
 routes[`${constants.apiVersion}screengrab`] = function(req, res) {
     const url = (environment === 'development') ? 'http://localhost:5000/word' : 'https://everything-wave.herokuapp.com/word' ;
     const file = envPath + '/img/test.png';
-    const options = {
-        phantomPath: 'node_modules/phantomjs/bin/phantomjs'
-    };
-
-    webshot(url, file, options, function(err) {
+    
+    webshot(url, file, webshotOptions, function(err) {
         if(err) {
             res.status(500).send(err);
         } else {
@@ -142,9 +147,15 @@ routes[`${constants.apiVersion}tweet`] = function(req, res) {
                 index: nextIndex,
                 text: nextWord
             });
-            word = current.text;
+            word = current.text + "wave";
+
+            if( nextIndex % 3 == 0 ){
+                word = word + generateRandomTag();
+            }
+            
             return newString;
         };
+
 
         fs.writeFile(dest, newJson, (err) => {
             if(err) {
@@ -162,11 +173,8 @@ routes[`${constants.apiVersion}tweet`] = function(req, res) {
         console.log('Generating screen grab...');
         const url = (environment === 'development') ? 'http://localhost:5000/word' : 'https://everything-wave.herokuapp.com/word' ;
         const file = envPath + '/img/test.png';
-        const options = {
-            phantomPath: 'node_modules/phantomjs/bin/phantomjs'
-        };
 
-        webshot(url, file, options, function(err) {
+        webshot(url, file, webshotOptions, function(err) {
             if(err) {
                 res.status(500).send(err);
             } else {
@@ -181,17 +189,21 @@ routes[`${constants.apiVersion}tweet`] = function(req, res) {
         var file = envPath + '/img/test.png';
         var b64content = fs.readFileSync(file, { encoding: 'base64' });
 
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        };
+
         Twit.post('media/upload', { media_data: b64content }, function (err, data, response) {
             // now we can assign alt text to the media, for use by screen readers and 
             // other text-based presentations and interpreters 
             var mediaIdStr = data.media_id_string
-            var altText = word + 'wave';
-            var meta_params = { media_id: mediaIdStr, alt_text: { text: altText } }
+            var text = capitalizeFirstLetter(word);
+            var meta_params = { media_id: mediaIdStr, alt_text: { text: text } }
             
             Twit.post('media/metadata/create', meta_params, function (err, data, response) {
                 if (!err) {
                     // now we can reference the media and post a tweet (media will attach to the tweet) 
-                    var params = { status: word + 'wave', media_ids: [mediaIdStr] }
+                    var params = { status: text, media_ids: [mediaIdStr] }
                 
                     Twit.post('statuses/update', params, function (err, data, response) {
                         console.log('Tweet created!');
@@ -213,11 +225,27 @@ routes[`${constants.apiVersion}tweet`] = function(req, res) {
                 console.log('Tweet successfully posted: '+word+'wave')
                 res.status(200).send({
                     status: 'success',
-                    word: word+'wave'
+                    word: word
                 });
             }
         });
     };
+
+    function generateRandomTag() {
+        const tags = ["80's", "retro", "synthwave", "retrowave", "outrun", "eighties", "synth"];
+        const randomTagIndex = Math.floor(Math.random() * 7);
+        const randomtag = tags[randomTagIndex];
+        
+        return " #" + randomtag;
+    }
+};
+
+routes[`${constants.apiVersion}randomtag`] = function(req, res) {
+    const tags = ["80's", "retro", "synthwave", "retrowave", "outrun", "eighties", "synth"];
+    const randomTagIndex = Math.floor(Math.random() * 7);
+    const randomtag = tags[randomTagIndex];
+
+    res.status(200).send(randomtag);
 };
 
 module.exports = routes;

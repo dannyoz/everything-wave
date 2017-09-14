@@ -43,7 +43,6 @@ gulp.task('browserify', function () {
         .pipe(gulp.dest('./environments/production/js'))
 });
 
-
 gulp.task('sass', function () {
     gulp.src('./app/styles.scss')
         .pipe(sass().on('error', sass.logError))
@@ -58,6 +57,10 @@ gulp.task('watch', function () {
     gulp.watch('app/**/*.js', ['frontEnd']);
     gulp.watch('app/**/*.vue', ['frontEnd']);
     gulp.watch('app/**/*.jsx', ['frontEnd']);
+});
+
+gulp.task('sass-watch', function() {
+    gulp.watch('app/**/*.scss', ['sass']);
 });
 
 gulp.task('frontEnd', ['browserify', 'sass', 'img', 'views']);
