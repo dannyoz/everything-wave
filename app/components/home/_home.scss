@@ -13,8 +13,9 @@
         }
 
         h2 {
-            opacity: 0;
+            text-indent: -10000px;
             color: white;
+            background-image: url('../img/wave.png');
         }
 
         @include centre();

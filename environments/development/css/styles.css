@@ -21,4 +21,6 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent; }
   .home .centre h2 {
-    color: white; }
+    text-indent: -10000px;
+    color: white;
+    background-image: url("../img/wave.png"); }
