@@ -6,9 +6,20 @@ const fs = require('fs');
 routes['/word/'] = function(req, res) {
 	var dest = 'app/shared/current-word.json';
 	var content = fs.readFileSync(dest, 'utf8');
-    var current = JSON.parse(content);
+	var word = JSON.parse(content).text;
+	var wordClass = "";
+
+	if (word.length > 8) {
+		wordClass = 'large'
+	} else if (word.length > 4) {
+		wordClass = 'medium'
+	} else {
+		wordClass = 'small'
+	}
+
 	res.render('word.html', {
-		word: current.text
+		word: word,
+		wordClass: wordClass
 	});
 };
 

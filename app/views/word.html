@@ -11,9 +11,13 @@
     </head>
     <body>
         <div id="ew-app">
+            <div class="gradient"></div>
             <div class="home">
                 <div class="centre">
-                    <h1>{{word}}</h1>
+                    <h1 class="{{wordClass}}">
+                        <span data-word="{{word}}" class="top-layer">{{word}}</span>
+                        <span data-word="{{word}}" class="bottom-layer">{{word}}</span>
+                    </h1>
                     <h2>Wave</h2>
                 </div>
             </div>

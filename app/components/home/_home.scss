@@ -3,21 +3,63 @@
 
         h1 {
             // font-family: "blambot-pro", sans-serif;
-            font-family: 'Permanent Marker', cursive;
-            color: white;
-            line-height: 3.5rem;
-            text-shadow: 0 0 10px 5px red;
-            text-transform: uppercase;
-            opacity: 0;
-            @include gradientText(#FFEB3B, #FF5722);
+            text-align: center;
+
+            span {
+                font-family: 'Permanent Marker', cursive;
+                line-height: 3.5rem;
+                text-transform: uppercase;
+                width: 100%;
+                bottom: 270px;
+                @include centre(x);
+                
+
+                &.top-layer {
+                    z-index: 4;
+                    @include gradientText(#FF00E1, #ffc641);
+                }
+
+                &.bottom-layer {
+                    z-index: 3;
+                    color:transparent;
+                    text-shadow: 1px 1px 0 $body-colour, 2px 2px 0 #186AEC, 0 0 50px #8b0c96;
+                }
+            }
+
+            &.small {
+                @include fontSize(75px);
+
+                span {
+                    height: 4rem;
+                }
+            }
+
+            &.medium {
+                @include fontSize(65px);
+            }
+
+            &.large {
+                @include fontSize(55px);
+            }
+
         }
 
         h2 {
+            // opacity:0;
             text-indent: -10000px;
             color: white;
-            background-image: url('../img/wave.png');
+            width: 600px;
+            height: 361px;
+            -webkit-filter: grayscale(50%);
+            background-image: url('../img/everything-wave.png');
         }
 
         @include centre();
     }
+}
+
+.gradient {
+    //@include vendorPrefix('linear-gradient', red blue);
+    background: linear-gradient(0deg, #39326d, $body-colour, #000);
+    @include fitContainer;
 }

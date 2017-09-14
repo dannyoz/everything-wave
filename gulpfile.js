@@ -59,5 +59,9 @@ gulp.task('watch', function () {
     gulp.watch('app/**/*.jsx', ['frontEnd']);
 });
 
+gulp.task('sass-watch', function() {
+    gulp.watch('app/**/*.scss', ['sass']);
+});
+
 gulp.task('frontEnd', ['browserify', 'sass', 'img', 'views']);
 gulp.task('default',  ['browserify', 'sass', 'img', 'views', 'watch', 'server']);
