@@ -147,9 +147,15 @@ routes[`${constants.apiVersion}tweet`] = function(req, res) {
                 index: nextIndex,
                 text: nextWord
             });
-            word = current.text;
+            word = current.text + "wave";
+
+            if( nextIndex % 3 == 0 ){
+                word = word + generateRandomTag();
+            }
+            
             return newString;
         };
+
 
         fs.writeFile(dest, newJson, (err) => {
             if(err) {
@@ -191,13 +197,13 @@ routes[`${constants.apiVersion}tweet`] = function(req, res) {
             // now we can assign alt text to the media, for use by screen readers and 
             // other text-based presentations and interpreters 
             var mediaIdStr = data.media_id_string
-            var wordwave = capitalizeFirstLetter(word + 'wave');
-            var meta_params = { media_id: mediaIdStr, alt_text: { text: wordwave } }
+            var text = capitalizeFirstLetter(word);
+            var meta_params = { media_id: mediaIdStr, alt_text: { text: text } }
             
             Twit.post('media/metadata/create', meta_params, function (err, data, response) {
                 if (!err) {
                     // now we can reference the media and post a tweet (media will attach to the tweet) 
-                    var params = { status: wordwave, media_ids: [mediaIdStr] }
+                    var params = { status: text, media_ids: [mediaIdStr] }
                 
                     Twit.post('statuses/update', params, function (err, data, response) {
                         console.log('Tweet created!');
@@ -219,11 +225,27 @@ routes[`${constants.apiVersion}tweet`] = function(req, res) {
                 console.log('Tweet successfully posted: '+word+'wave')
                 res.status(200).send({
                     status: 'success',
-                    word: word+'wave'
+                    word: word
                 });
             }
         });
     };
+
+    function generateRandomTag() {
+        const tags = ["80's", "retro", "synthwave", "retrowave", "outrun", "eighties", "synth"];
+        const randomTagIndex = Math.floor(Math.random() * 7);
+        const randomtag = tags[randomTagIndex];
+        
+        return " #" + randomtag;
+    }
+};
+
+routes[`${constants.apiVersion}randomtag`] = function(req, res) {
+    const tags = ["80's", "retro", "synthwave", "retrowave", "outrun", "eighties", "synth"];
+    const randomTagIndex = Math.floor(Math.random() * 7);
+    const randomtag = tags[randomTagIndex];
+
+    res.status(200).send(randomtag);
 };
 
 module.exports = routes;

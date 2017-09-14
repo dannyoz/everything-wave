@@ -4,10 +4,10 @@ const constants = require('../app/shared/constants.js');
 const fs = require('fs');
 
 routes['/word/'] = function(req, res) {
-	var dest = 'app/shared/current-word.json';
-	var content = fs.readFileSync(dest, 'utf8');
-	var word = JSON.parse(content).text;
-	var wordClass = "";
+	const dest = 'app/shared/current-word.json';
+	const content = fs.readFileSync(dest, 'utf8');
+	const word = JSON.parse(content).text;
+	let wordClass = "";
 
 	if (word.length > 8) {
 		wordClass = 'large'
@@ -25,8 +25,19 @@ routes['/word/'] = function(req, res) {
 
 routes['/word/:index'] = function(req, res) {
 	const index = req.params.index;
+	const word = words[index];
+	
+	if (word.length > 8) {
+		wordClass = 'large'
+	} else if (word.length > 4) {
+		wordClass = 'medium'
+	} else {
+		wordClass = 'small'
+	}
+
 	res.render('word.html', {
-		word: words[index]
+		word: word,
+		wordClass: wordClass
 	});
 };
 

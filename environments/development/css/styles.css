@@ -45,6 +45,7 @@ body {
       font-size: 55px;
       font-size: 3.4375rem; }
   .home .centre h2 {
+    margin-top: 5rem;
     text-indent: -10000px;
     color: white;
     width: 600px;
@@ -53,9 +54,29 @@ body {
     background-image: url("../img/everything-wave.png"); }
 
 .gradient {
-  background: linear-gradient(0deg, #39326d, #1E1E26, #000);
+  background: linear-gradient(0deg, #312c56, #1E1E26, #000);
   position: absolute;
   top: 0px;
   right: 0px;
   bottom: 0px;
   left: 0px; }
+  .gradient:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background-image: url("../img/bg.png");
+    background-position-x: 50%;
+    background-position-y: -166px; }
+  .gradient:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background-image: url("../img/bg.png");
+    background-position-x: 50%;
+    background-position-y: 267px; }
