@@ -15,7 +15,7 @@ const Twit = new twit({
     consumer_secret:      process.env.TWITTER_CONSUMER_SECRET,
     access_token:         process.env.TWITTER_ACCESS_TOKEN,
     access_token_secret:  process.env.TWITTER_ACCESS_TOKEN_SECRET,
-    timeout_ms:           60*1000,  
+    timeout_ms:           60*1000,
 });
 
 const webshotOptions = {
@@ -149,9 +149,9 @@ routes[`${constants.apiVersion}tweet`] = function(req, res) {
             });
             word = current.text + "wave";
 
-            if( nextIndex % 3 == 0 ){
-                word = word + generateRandomTag();
-            }
+            // if( nextIndex % 3 == 0 ){
+            //     word = word + generateRandomTag();
+            // }
             
             return newString;
         };
