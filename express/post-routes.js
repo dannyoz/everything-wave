@@ -159,7 +159,7 @@ routes[`${constants.apiVersion}tweet`] = function(req, res) {
 
         fs.writeFile(dest, newJson, (err) => {
             if(err) {
-                res.status(500).send(err);
+                res.status(500).send('Error writing json file');
             } else if(!headerSent) {
                 headerSent = true;
                 newJson = createNext();
@@ -176,7 +176,7 @@ routes[`${constants.apiVersion}tweet`] = function(req, res) {
 
         webshot(url, file, webshotOptions, function(err) {
             if(err) {
-                res.status(500).send(err);
+                res.status(500).send('Error generating screengrab');
             } else {
                 console.log('Screen grab generated!');
                 tweet(word);
@@ -219,7 +219,7 @@ routes[`${constants.apiVersion}tweet`] = function(req, res) {
         var file = envPath + '/img/test.png';
         del([file], function (err, paths) {
             if(err) {
-                res.status(500).send(err);
+                res.status(500).send('Error cleaning the directory');
             } else {
                 console.log('Deleted files/folders:\n', paths.join('\n'));
                 console.log('Tweet successfully posted: '+word+'wave')
