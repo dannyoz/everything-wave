@@ -4,5 +4,9 @@ const domain = (environment === 'development') ? 'localhost:5000' : 'https://eve
 const endpoint = '/api/v1/tweet';
 
 HTTP.post(domain + endpoint).end(function(err, data) {
-    console.log('tweet posted', data);
+    if (err) {
+        console.log('ERROR', data.body);
+    } else {
+        console.log('Tweet posted succesfully', data.body);
+    }
 });
