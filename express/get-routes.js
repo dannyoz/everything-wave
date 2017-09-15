@@ -3,7 +3,7 @@ const words = require('../app/shared/words-clean.json');
 const constants = require('../app/shared/constants.js');
 const fs = require('fs');
 
-function generateClass(word) {
+function insertClass(word) {
 	let wordClass = "";
 	if (word.length > 8) {
 		wordClass = 'large'
@@ -19,7 +19,7 @@ routes['/word/'] = function(req, res) {
 	const dest = 'app/shared/current-word.json';
 	const content = fs.readFileSync(dest, 'utf8');
 	const word = JSON.parse(content).text;
-	const wordClass = generateClass(word);
+	const wordClass = insertClass(word);
 
 	res.render('word.html', {
 		word: word,
@@ -29,7 +29,8 @@ routes['/word/'] = function(req, res) {
 
 routes['/word/:index'] = function(req, res) {
 	const index = req.params.index;
-	const wordClass = generateClass(word);
+	const word = words[index];
+	const wordClass = insertClass(word);
 
 	res.render('word.html', {
 		word: word,
