@@ -159,7 +159,7 @@ routes[`${constants.apiVersion}tweet`] = function(req, res) {
 
         fs.writeFile(dest, newJson, (err) => {
             if(err) {
-                res.status(500).send('Error writing file');
+                res.status(500).send('Error writing json file');
             } else if(!headerSent) {
                 headerSent = true;
                 newJson = createNext();
