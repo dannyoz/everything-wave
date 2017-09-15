@@ -3,19 +3,23 @@ const words = require('../app/shared/words-clean.json');
 const constants = require('../app/shared/constants.js');
 const fs = require('fs');
 
-routes['/word/'] = function(req, res) {
-	const dest = 'app/shared/current-word.json';
-	const content = fs.readFileSync(dest, 'utf8');
-	const word = JSON.parse(content).text;
+function generateClass(word) {
 	let wordClass = "";
-
 	if (word.length > 8) {
 		wordClass = 'large'
 	} else if (word.length > 4) {
 		wordClass = 'medium'
 	} else {
 		wordClass = 'small'
-	}
+	};
+	return wordClass;
+}
+
+routes['/word/'] = function(req, res) {
+	const dest = 'app/shared/current-word.json';
+	const content = fs.readFileSync(dest, 'utf8');
+	const word = JSON.parse(content).text;
+	const wordClass = generateClass(word);
 
 	res.render('word.html', {
 		word: word,
@@ -25,15 +29,7 @@ routes['/word/'] = function(req, res) {
 
 routes['/word/:index'] = function(req, res) {
 	const index = req.params.index;
-	const word = words[index];
-	
-	if (word.length > 8) {
-		wordClass = 'large'
-	} else if (word.length > 4) {
-		wordClass = 'medium'
-	} else {
-		wordClass = 'small'
-	}
+	const wordClass = generateClass(word);
 
 	res.render('word.html', {
 		word: word,
